@@ -1,0 +1,5 @@
+
+  - job_name: "atsea_controller"
+
+    static_configs:
+      - targets: ["localhost:8099"]
