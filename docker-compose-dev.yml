@@ -17,7 +17,7 @@ services:
     secrets:
       - postgres_password
     volumes: 
-      - /mnt/logs/pg_log:/var/lib/postgresql/data/pg_log
+      - /mnt/logs/pg_log:/usr/share/postgresql/9.6/pg_log
         
   appserver:
     build:
