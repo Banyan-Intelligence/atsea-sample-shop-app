@@ -5,6 +5,7 @@ services:
     build: 
        context: ./database
     image: atsea_db
+    command: postgres -c config_file=/usr/share/postgresql/9.6/postgresql.conf
     environment:
       POSTGRES_USER: gordonuser
       POSTGRES_DB: atsea
@@ -15,7 +16,9 @@ services:
       - back-tier
     secrets:
       - postgres_password
-
+    volumes: 
+      - /mnt/logs/pg_log:/var/lib/postgresql/data/pg_log
+        
   appserver:
     build:
        context: app
