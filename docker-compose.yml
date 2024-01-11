@@ -43,10 +43,22 @@ services:
 
   reverse_proxy:
     build: ./reverse_proxy
+    ports: 
+      - "8090:8090"
     networks:
       - front-tier
     volumes: 
       - /home/bishal-bi/new/nginx:/var/log/nginx   
+
+  nginx_prometheus_exporter:
+    build: ./nginx_prometheus_exporter
+    command: nginx-prometheus-exporter -nginx.scrape-uri=http://reverse_proxy:8090/metrics  
+    ports: 
+      - "9113:9113"
+    networks: 
+      - front-tier  
+    depends_on:
+      - reverse_proxy  
 
   payment_gateway:
     build:
