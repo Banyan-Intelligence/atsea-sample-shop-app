@@ -74,6 +74,7 @@ networks:
   back-tier: 
   payment:
     driver: overlay  
+    attachable: true
     
 
 secrets:
