@@ -33,6 +33,7 @@ services:
       - "8080:8080" 
       - "5005:5005"
       - "9011:9011"
+      - "8099:8099"
     networks:
       - front-tier
       - back-tier

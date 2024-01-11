@@ -3,3 +3,8 @@
 
     static_configs:
       - targets: ["localhost:8099"]
+
+  - job_name: "nginx"
+
+    static_configs:
+      - targets: ["localhost:9113"]
