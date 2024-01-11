@@ -34,6 +34,7 @@ ENV JAVA_OPTS="-Dcom.sun.management.jmxremote \
 
 EXPOSE 5005
 EXPOSE 8080
+EXPOSE 9011
 
 ENTRYPOINT exec java $JAVA_OPTS -javaagent:"jmx_prometheus_javaagent-0.20.0.jar=8099:jmx_config.yaml" -jar /app/AtSea-0.0.1-SNAPSHOT.jar --debug --spring.profiles.active=postgres
 
