@@ -19,6 +19,33 @@ datasource:
       format_sql: true
       dialect: org.hibernate.dialect.H2Dialect
 ---
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+  endpoint:
+    metrics: 
+      enabled: true
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    metrics: 
+      enabled: true
+---      
+management:
+  endpoint:
+    health:
+      show-details: 'always'  
+---
+management:
+  security:
+    enabled: false
+---
 spring:
   profiles: postgres
   devtools:
