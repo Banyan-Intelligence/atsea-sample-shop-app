@@ -2,7 +2,9 @@ package com.docker.atsea.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+import com.docker.atsea.aspect.ResponseTimeLoggerAspect;
 import com.docker.atsea.service.CustomerService;
 import com.docker.atsea.service.CustomerServiceImpl;
 import com.docker.atsea.service.OrderService;
@@ -34,4 +36,9 @@ public class BeanConfiguration {
 	public ComboPooledDataSource dataSource() {
 	    return new ComboPooledDataSource();
 	}
+
+	@Bean
+    public ResponseTimeLoggerAspect responseTimeLoggerAspect() {
+        return new ResponseTimeLoggerAspect();
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.docker.atsea.util.RequestContextHolder;
 
 @RestController
 @RequestMapping(path = "/purchase/")
@@ -19,6 +20,8 @@ public class PurchaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="", method = RequestMethod.GET)
     public ResponseEntity<?> purchase() {
+		RequestContextHolder.setRequestTime();
+
     	logger.info("Performing purchase");
     	
     	JSONObject message = new JSONObject();    	

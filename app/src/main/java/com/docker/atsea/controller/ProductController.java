@@ -16,6 +16,7 @@ import com.docker.atsea.model.Product;
 import com.docker.atsea.service.ProductService;
 import com.docker.atsea.util.CustomErrorType;
 
+import com.docker.atsea.util.RequestContextHolder;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -33,6 +34,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/product/", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> listAllProducts() {
+		RequestContextHolder.setRequestTime();
 		List<Product> products = productService.findAllProducts();
 		if (products.isEmpty()) {
 			return new ResponseEntity<List<Product>>(HttpStatus.NO_CONTENT);
@@ -45,6 +47,7 @@ public class ProductController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getProduct(@PathVariable("productId") long productId) {
+        RequestContextHolder.setRequestTime();
 		logger.info("Fetching Product with id {}", productId);
 		Product product = productService.findById(productId);
 		if (product == null) {

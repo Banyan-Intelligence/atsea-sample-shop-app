@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import com.docker.atsea.util.RequestContextHolder;
 
 @RestController
 @RequestMapping("/utility/")
@@ -32,6 +33,8 @@ public class UtilityController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/healthcheck/", method = RequestMethod.GET)
     public ResponseEntity<?> healthCheck() {
+		RequestContextHolder.setRequestTime();
+
     	logger.info("Performing healthcheck");
     	JSONObject healthcheck = new JSONObject();
     	try
@@ -51,6 +54,8 @@ public class UtilityController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/containerid/", method = RequestMethod.GET)
 	public ResponseEntity<?> containerId() {
+		RequestContextHolder.setRequestTime();
+		
 		final InetAddress localHost;
 		JSONObject containerId = new JSONObject();
 		

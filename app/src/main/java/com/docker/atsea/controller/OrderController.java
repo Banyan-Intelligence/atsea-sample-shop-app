@@ -20,6 +20,8 @@ import com.docker.atsea.model.Order;
 import com.docker.atsea.service.OrderService;
 import com.docker.atsea.util.CustomErrorType;
 
+import com.docker.atsea.util.RequestContextHolder;
+
 @RestController
 @RequestMapping("/api")
 public class OrderController {
@@ -37,6 +39,8 @@ public class OrderController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/order/", method = RequestMethod.POST)
 	public ResponseEntity<?> createOrder(@RequestBody Order order, UriComponentsBuilder ucBuilder) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Creating order : {}", order);
 
 		if (orderService.orderExists(order)) {
@@ -61,6 +65,8 @@ public class OrderController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteItemById(@PathVariable("orderId") long orderId) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching & Deleting Item with id {}", orderId);
 
 		Order order = orderService.findById(orderId);
@@ -78,6 +84,8 @@ public class OrderController {
 	
 	@RequestMapping(value = "/order/", method = RequestMethod.GET)
 	public ResponseEntity<List<Order>> listAllOrderss() {
+        RequestContextHolder.setRequestTime();
+
 		List<Order> order = orderService.findAllOrders();
 		if (order.isEmpty()) {
 			return new ResponseEntity<List<Order>>(HttpStatus.NO_CONTENT);
@@ -91,6 +99,8 @@ public class OrderController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getOrder(@PathVariable("orderId") long orderId) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching Order with id {}", orderId);
 		Order order = orderService.findById(orderId);
 		if (order == null) {
@@ -105,6 +115,8 @@ public class OrderController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/order/{orderId}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateOrder(@PathVariable("orderId") long orderId, @RequestBody Order order) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Updating order with id {}", orderId);
 
 		Order currentOrder = orderService.findById(orderId);

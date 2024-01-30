@@ -22,6 +22,8 @@ import com.docker.atsea.service.CustomerService;
 import com.docker.atsea.util.CustomErrorType;
 import com.docker.atsea.util.CustomerInfo;
 
+import com.docker.atsea.util.RequestContextHolder;
+
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -40,6 +42,8 @@ public class CustomerController {
 
 	@RequestMapping(value = "/customer/", method = RequestMethod.GET)
 	public ResponseEntity<List<JSONObject>> listAllUsers() {
+        RequestContextHolder.setRequestTime();
+
 		List<Customer> customer = customerService.findAllCustomers();
 		if (customer.isEmpty()) {
 			return new ResponseEntity<List<JSONObject>>(HttpStatus.NO_CONTENT);
@@ -58,6 +62,8 @@ public class CustomerController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/customer/{customerId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCustomer(@PathVariable("customerId") long customerId) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching Customer with id {}", customerId);
 		Customer customer = customerService.findById(customerId);
 		if (customer == null) {
@@ -76,6 +82,8 @@ public class CustomerController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/customer/username={userName}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCustomerByUserName(@PathVariable("userName") String userName) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching Customer with username {}", userName);
 		Customer customer = customerService.findByUserName(userName);
 		if (customer == null) {
@@ -94,6 +102,8 @@ public class CustomerController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/customer/name={name}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCustomerByName(@PathVariable("name") String name) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching Customer with name {}", name);
 		Customer customer = customerService.findByName(name);
 		if (customer == null) {
@@ -112,6 +122,8 @@ public class CustomerController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/customer/", method = RequestMethod.POST)
 	public ResponseEntity<?> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Creating Customer : {}", customer);
 		
 		System.out.println(customerService.customerExist(customer));
@@ -137,6 +149,8 @@ public class CustomerController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/customer/{customerId}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCustomer(@PathVariable("customerId") long customerId, @RequestBody Customer customer) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Updating customer with id {}", customerId);
 
 		Customer currentCustomer = customerService.findById(customerId);
@@ -165,6 +179,8 @@ public class CustomerController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/customer/{customerId}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCustomer(@PathVariable("customerId") long customerId) {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Fetching & Deleting customer with id {}", customerId);
 
 		Customer customer = customerService.findById(customerId);
@@ -181,6 +197,8 @@ public class CustomerController {
 
 	@RequestMapping(value = "/customer/", method = RequestMethod.DELETE)
 	public ResponseEntity<Customer> deleteAllCustomers() {
+        RequestContextHolder.setRequestTime();
+
 		logger.info("Deleting All Customers");
 
 		customerService.deleteAllCustomers();

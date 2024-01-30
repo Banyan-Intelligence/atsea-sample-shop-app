@@ -22,6 +22,8 @@ import com.docker.atsea.util.CustomErrorType;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import com.docker.atsea.util.RequestContextHolder;
+
 @RestController
 @RequestMapping(path = "/login/")
 public class LoginController {
@@ -40,6 +42,7 @@ public class LoginController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody final UserLogin login) 
 		throws ServletException {
+        RequestContextHolder.setRequestTime();
 		
 		JSONObject reponseToken = new JSONObject();
 		Customer customer = customerService.findByUserName(login.username);
@@ -57,11 +60,8 @@ public class LoginController {
                 .compact();
 			
 			reponseToken.put("token", token);
-			
 			return new ResponseEntity<JSONObject>(reponseToken, HttpStatus.OK);
 		}
 		return new ResponseEntity<Object>(new CustomErrorType("Customer name or password not found."), HttpStatus.UNAUTHORIZED);
-		
-		
 	}
 }
